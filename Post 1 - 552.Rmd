@@ -34,7 +34,6 @@ All collection information is manually entered over time and is unique to an ind
 First we read the data into R, and look at which columns are majority missing values using the DataExplorer package. We remove those columns from our collection data.
 
 ```{r Read Data}
-#collection <- read.csv("C:/Users/jamie/Downloads/BZAN552_FinalPortfolio/collection.csv")
 collection <- read.csv("C:/Users/jamie/Documents/BZAN/BZAN-552--Final-Portfolio/collection.csv")
 head(collection)
 
