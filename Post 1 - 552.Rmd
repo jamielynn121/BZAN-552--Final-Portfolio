@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r Load Packages}
+```{r Load Packages, include = FALSE}
 library(DataExplorer)
 library(tidyverse)
 library(cluster)
@@ -91,7 +91,7 @@ sum(sapply(play_cont, is.na))
 sum(sapply(play_cont, is.infinite))
 sum(sapply(play_cont, is.nan))
 
-# There are too many NA values in num plays for the data set where we know the price paid - so we can remove that column
+# There are too many NA values in price paid for the data set where we know the number of plays - so we can remove that column
 play_cont <- play_cont[,-which(names(play_cont) == "pricepaid")]
 sum(sapply(play_cont, is.na))
 ```
@@ -179,19 +179,19 @@ known_price_complete$k3 <- k3
 known_price_complete$objectname[which(known_price_complete$k3 == 1)]
 table(known_price_complete$itemtype[which(known_price_complete$k3 == 1)])
 table(droplevels(known_price_complete$acquiredfrom[which(known_price_complete$k3 == 1)]))
-known_price_complete[which(known_price_complete$k3 == 1),]
+#known_price_complete[which(known_price_complete$k3 == 1),]
 
 # Games in cluster 2
 known_price_complete$objectname[which(known_price_complete$k3 == 2)]
 table(known_price_complete$itemtype[which(known_price_complete$k3 == 2)])
 table(droplevels(known_price_complete$acquiredfrom[which(known_price_complete$k3 == 2)]))
-known_price_complete[which(known_price_complete$k3 == 2),]
+#known_price_complete[which(known_price_complete$k3 == 2),]
 
 # Games in cluster 3
 known_price_complete$objectname[which(known_price_complete$k3 == 3)]
 known_price_complete$itemtype[which(known_price_complete$k3 == 3)]
 known_price_complete$acquiredfrom[which(known_price_complete$k3 == 3)]
-known_price_complete[which(known_price_complete$k3 == 3),]
+#known_price_complete[which(known_price_complete$k3 == 3),]
 ```
 
 # K-means Clustering on Price Data Subset
@@ -304,13 +304,15 @@ table(droplevels(num_plays_complete$acquiredfrom[which(num_plays_complete$k3 == 
 
 # Games in cluster 2
 num_plays_complete$objectname[which(num_plays_complete$k3 == 2)]
-num_plays_complete[which(num_plays_complete$k3 == 2),]
+table(num_plays_complete$itemtype[which(num_plays_complete$k3 == 2)])
 table(droplevels(num_plays_complete$acquiredfrom[which(num_plays_complete$k3 == 2)]))
+#num_plays_complete[which(num_plays_complete$k3 == 2),]
 
 # Games in cluster 3
 num_plays_complete$objectname[which(num_plays_complete$k3 == 3)]
-num_plays_complete[which(num_plays_complete$k3 == 3),]
+table(num_plays_complete$itemtype[which(num_plays_complete$k3 == 3)])
 table(droplevels(num_plays_complete$acquiredfrom[which(num_plays_complete$k3 == 3)]))
+#num_plays_complete[which(num_plays_complete$k3 == 3),]
 
 ```
 
