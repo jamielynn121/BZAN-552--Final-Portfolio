@@ -31,7 +31,7 @@ With sites like BGG.com making it available for hobbiest to publish their collec
 All collection information is manually entered over time and is unique to an individuals account. Some accounts are made public, so their collection is viewable by others. To download a .csv of my personal collection, go to https://boardgamegeek.com/collection/user/Astrodar?own=1&subtype=boardgame&ff=1 and click "owned" next to Download board games: above the table of games. This will initialize a download to your computer.
 
 # Data Read
-First we read the data into R, and look at which columns are majority missing values using the DataExplorer package. We remove those columns from our collection data.
+First, we read the data into R and look at which columns are majority missing values using the DataExplorer package. We remove those columns from our collection data.
 
 ```{r Read Data}
 collection <- read.csv("C:/Users/jamie/Documents/BZAN/BZAN-552--Final-Portfolio/collection.csv")
@@ -101,9 +101,9 @@ First, I perform agglomerative (bottom up) clustering on my price data subset. I
 
 I ensure there are no NA, infiniate, or NaN values in the data set and only use complete cases in my analysis. This reduced set is 61 observations, compared to 167 observations from the full collection. The data is scaled to standardize all variables. This ensures one column is not weighted much higher than another column due to original scale of the data and change in values.
 
-There are multiple methods that can be used in hierarchical clustering. Here, I assess the average, single ,complete, and ward methods to determine which method has the highest agglomerative coefficient (AC). The AC measures the strength of the clustering structure. The closer the cluster structure is to 1, the better. Here, the ward method provides the highest AC so this is the method I choose to proceed with in my clustering. 
+There are multiple methods that can be used in hierarchical clustering. Here, I assess the average, single ,complete, and ward methods to determine which method has the highest agglomerative coefficient (AC). The AC measures the strength of the clustering structure. The closer the cluster structure is to 1, the better. Here, the ward method provides the highest AC; therefore, this is the method I choose to proceed with in my clustering. 
 
-To determine the optimal number of clusters, I use the silhouette calculation that produces a plot of the number of clusters versus the average sihoulette width. The average sihouette method measure the quality of clustering, like the agglomerative coefficient used above. Used together, we can determine how well each object lies within its cluster. A high average sihouette indicates good clustering. Three is determined to be the optimal number of clusters, as it produces the highest average sihouette width.  
+To determine the optimal number of clusters, I use the silhouette calculation that produces a plot of the number of clusters versus the average sihoulette width. The average sihouette method measure the quality of clustering, similar to the agglomerative coefficient used above. Used together, we can determine how well each object lies within its respective cluster. A high average sihouette indicates good clustering. Three is determined to be the optimal number of clusters, as it produces the highest average sihouette width.  
 
 Finally, building my fit, I use the euclidean distance as the metric for measuring distance between elements to be merged and the ward.D2 method to lead to the minimum increase in total within-cluster variance after merging. Usually, the closest elements by distance that minimize the total within-cluster variance are merged to create a new cluster. This step is repeated for all points until they all join to one at the very top of the dendogram. 
 
@@ -111,7 +111,6 @@ Finally, building my fit, I use the euclidean distance as the metric for measuri
 # BGG changes ratings to 0 if they haven't been rated
 # Must change these to NAs
 pri_cont <- pri_cont[which(!pri_cont$rating == "0"),]
-
 
 # How many na values do we have in this data
 sum(sapply(pri_cont, is.na))
@@ -195,7 +194,7 @@ known_price_complete$acquiredfrom[which(known_price_complete$k3 == 3)]
 ```
 
 # K-means Clustering on Price Data Subset
-K-means clustering was my second choice for clustering, but I wanted to see how the clusters fit in reduced dimensions to see if this method was appropriate. 
+K-means clustering was my second choice, due to known outliers in the dataset. I wanted to see how the clusters fit in reduced dimensions to see if this method was appropriate. 
 
 K-means clustering is found to work well when the shape of the clusters is hyper-spherical like circle in 2D. K-means clustering requries you know the number of clusters to intialize the fit. Furthermore, it does not do well when there are outliers in the cluster. 
 
