@@ -19,7 +19,7 @@ library(dplyr)
 ```
 
 # Introduction
-The board game industry is an 9.6 billion industry, globally as of 2016, and constantly growing. Game analysis is sought by both the publishers and consumers. BoardGameGeek.com allows users to add their colletion information, including price paid, their ranking, and number of plays of each game owned. 
+The board game industry is a 9.6 billion dollar industry globally, as of 2016, and constantly growing. Game analysis is sought by both the publishers and consumers. BoardGameGeek.com allows users to add their collection information, including price paid, their ranking, and number of plays of each game owned. 
 
 With sites like BGG.com making it available for hobbiest to publish their collections, data is readily available for publishers to evaluate groupings and clusters of games to potentially influence where to focus marketing for new games and kickstarter funding campaigns. 
 
@@ -144,9 +144,9 @@ plot(avg_col_dend)
 ```
 
 # Three Clusters on Price Data Subset
-I cut the into three clusters, as determined optimal, and add that cluster ID back into the original data for further analysis. First, I summarize the clusters by mean values of each continuous variable to see how the clusters are different. 
+I cut the tree into three clusters, as determined optimal, and add that cluster ID back into the original data for further analysis. First, I summarize the clusters by mean values of each continuous variable to see how the clusters are different. 
 
-The three clusters have very different average price points and playing times. The max players and min players are, however, very similar. Cluster 1 seems to have higher ratings, higher playing times and higher price paid. While cluster 2 seems to be middle ground between 1 and 3. Cluster three is made up of 1 game that is an outlier in the data with a very low rating and very low price that plays very quickly. 
+The three clusters have very different average price points and playing times. The max players and min players are, however, very similar. Cluster 1 seems to have higher ratings, higher playing times and higher price paid, while cluster 2 seems to be middle ground between 1 and 3. Cluster 3 is made up of 1 game that is an outlier in the data with a very low rating and very low price that plays very quickly. 
 
 Then, we can look at the game names and other statistics that were not used in the cluster analysis. Upon looking at the name of the games in each respective cluster, it is obvious to me why they were grouped like this. Cluster 1 includes some of my favorite games, games I was willing to pay a lot more for and that take a longer time to play. The ratings are highest because they are the games I have enjoyed the most in my collection. Cluster 2 includes a lot of games I really enjoy, but they play a little quicker and I haven't paid nearly as much for these games. Cluster 3 is a game, Zombie Dice, I got from a sale on International Table Top day. The sale was really good and my price paid was really low. Overall, the game was okay, but it isn't one that hits the table a lot anymore.
 
@@ -192,13 +192,13 @@ known_price_complete$acquiredfrom[which(known_price_complete$k3 == 3)]
 # K-means Clustering on Price Data Subset
 K-means clustering was my second choice, due to known outliers in the dataset. I wanted to see how the clusters fit in reduced dimensions to see if this method was appropriate. 
 
-K-means clustering is found to work well when the shape of the clusters is hyper-spherical like circle in 2D. K-means clustering requries you know the number of clusters to intialize the fit. Furthermore, it does not do well when there are outliers in the cluster. 
+K-means clustering is found to work well when the shape of the clusters is hyper-spherical like circle in 2D. K-means clustering requries you know the number of clusters to intialize the fit. Furthermore, it does not do well when there are outliers in the cluster or when the clusters are of different sizes. 
 
-Wards method for hierarchical clustering is the hierarchical analog of K-means and can be used to initalize a k-means cluster. So here, I initilaize the kmeans fit with three clusters. 
+Wards method for hierarchical clustering is the hierarchical analog of K-means and can be used to initalize a k-means cluster. So here, I initilaize the k-means fit with three clusters. 
 
-By plotting the clusters after kmeans, we see that Zombie Dice (game 167) is still an outlier in this data set, but not included in a cluster by itself like it was above in cluster 3 in the hierarchical method. Instead, it skews cluster 3 from the kmeans method and is very different from the centroid of that cluster.
+By plotting the clusters after k-means, we see that Zombie Dice (game 167) is still an outlier in this data set, but not included in a cluster by itself like it was above in cluster 3 in the hierarchical method. Instead, it skews cluster 3 from the k-means method and is very different from the centroid of that cluster. Due to the outliers in the clusters and the clusters of different sizes, along with the clusters not following a hyper-spherical shape, k-means clustering isn't a good model for our data.
 
-```{r Kmeans Price}
+```{r k-means Price}
 set.seed(552)
 
 fit <- kmeans(pri_cont_scale, 3)
@@ -312,9 +312,11 @@ table(droplevels(num_plays_complete$acquiredfrom[which(num_plays_complete$k3 == 
 ```
 
 # K-means Clustering on Number of Plays Data Subset
-Similar to the kmeans clustering above, we use the number of clusters detected from the ward hierarchical model. Three clusters are initialized and plotted on two reduced dimensions. There is a little cluster overlap between cluster 2 and three here. We do not see the small cluster of 1 or 2 games like we have in previous models, but there are outliers in both cluster 1 and 3 that skew the clusters. These points seem to be farther from the centroid of their respective cluster. This model is less repeatable and several of the clusters changed when setting the seed differently. This produces less reliable clusters that, and this method seems like it would be less beneificial to for marketing purposes.
+Similar to the k-means clustering above, we use the number of clusters detected from the ward hierarchical model. Three clusters are initialized and plotted on two reduced dimensions. There is a little cluster overlap between cluster 2 and 3 here. We do not see the small cluster of 1 or 2 games like we have in previous models, but there are outliers in both cluster 1 and 3 that skew the clusters. These points seem to be farther from the centroid of their respective cluster. This model is less repeatable and several of the clusters changed when setting the seed differently. This produces less reliable clusters that, and this method seems like it would be less beneificial to for marketing purposes.
 
-```{r Kmeans Number of Plays}
+Like the previous k-means section above, the outliers in the clusters, the clusters of different sizes, along with the clusters not following a hyper-spherical shape, k-means clustering isn't a good model for our data.
+
+```{r K-means Number of Plays}
 set.seed(1)
 
 fit <- kmeans(play_cont_scale, 3)
