@@ -2,15 +2,11 @@
 title: "Post 1 - Board Games"
 author: "Jamie McKinnon"
 date: "December 1, 2018"
-output: 
-  html_document:
-    keep_md: true
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-  fig.path = "README_figs/README-"
-)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r Load Packages, include = FALSE}
